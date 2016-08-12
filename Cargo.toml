@@ -1,0 +1,8 @@
+[package]
+authors = ["Daan Rijks <daanrijks@gmail.com>"]
+name = "crabtrace"
+version = "0.1.0"
+
+[dependencies]
+cgmath = "0.10.0"
+image = "0.10.1"
