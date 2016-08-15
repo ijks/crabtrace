@@ -11,7 +11,7 @@ pub struct Plane {
 }
 
 impl Plane {
-    fn new(normal: Vector, offset: Point) -> Plane {
+    pub fn new(normal: Vector, offset: Point) -> Plane {
         Plane {
             normal: normal,
             offset: offset,

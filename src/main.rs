@@ -8,7 +8,7 @@ use cgmath::vec3;
 
 use camera::Camera;
 use math::*;
-use primitive::Sphere;
+use primitive::{Sphere, Plane};
 use ray::Ray;
 use raytracer::Raytracer;
 use scene::Scene;
@@ -25,6 +25,7 @@ mod scene;
 fn main() {
     let mut scene = Scene::new();
     scene.add_primitive(Sphere::new(vec3(0.0, 0.0, 2.0), 1.0));
+    scene.add_primitive(Plane::new(vec3(0.0, 2.0, 0.0), Vector::unit_y()));
     let raytracer = Raytracer {
         scene: scene,
         camera: Camera::new(Point::zero(), Vector::unit_z(), 90.0),
