@@ -75,5 +75,5 @@ impl Into<Vector> for Color {
 }
 
 fn convert_component(component: f32) -> u8 {
-    map_range(clamp(component, 0.0, 1.0), 0.0..1.0, 255.0..0.0) as u8
+    map_range(clamp(component, 0.0, 1.0), 0.0..1.0, 0.0..255.0) as u8
 }
