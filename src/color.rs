@@ -6,6 +6,7 @@ use image;
 
 use math::*;
 
+#[derive(Debug)]
 pub struct Color {
     inner: Vector,
 }

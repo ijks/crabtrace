@@ -22,6 +22,7 @@ impl Raytracer {
     }
 }
 
+#[derive(Debug)]
 pub struct TraceResult {
     pub color: Color,
 }
