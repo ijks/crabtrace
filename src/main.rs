@@ -39,11 +39,9 @@ fn main() {
         let basis_y = bottom_left - top_left;
         let (u, v) = (x as f32 / size.0 as f32, y as f32 / size.1 as f32);
 
-        let direction = top_left + u * basis_x + v * basis_y - raytracer.camera.position();
-
         let ray = Ray {
             origin: raytracer.camera.position(),
-            direction: direction.normalize(),
+            direction: top_left + u * basis_x + v * basis_y - raytracer.camera.position(),
         };
         let result = raytracer.trace(ray, 1);
 
