@@ -1,7 +1,7 @@
 extern crate cgmath;
 extern crate image;
 
-use std::io;
+use std::fs::File;
 
 use cgmath::prelude::*;
 use cgmath::vec3;
@@ -48,6 +48,7 @@ fn main() {
         *pixel = result.color.into_pixel();
     }
 
-    let mut output = io::stdout();
-    image::ImageRgb8(buffer).save(&mut output, image::PNG);
+    // TODO: add command line options to configure this.
+    let mut output = File::create("output.png").expect("Couldn't create output file.");
+    image::ImageRgb8(buffer).save(&mut output, image::PNG).expect("Couldn't write to output file.");
 }
