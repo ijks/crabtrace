@@ -18,7 +18,7 @@ impl Raytracer {
         let intersection = self.scene.intersect(ray);
         let distance = intersection.map(|i| i.distance).unwrap_or(MAX_DEPTH);
 
-        TraceResult { color: Vector::from_value(distance / MAX_DEPTH).into() }
+        TraceResult { color: Vector::from_value(1.0 - (distance / MAX_DEPTH)).into() }
     }
 }
 
