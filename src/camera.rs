@@ -1,6 +1,7 @@
 use cgmath::prelude::*;
 
 use math::*;
+use ray::Ray;
 
 #[derive(Clone, Copy)]
 pub struct Camera {
@@ -33,5 +34,16 @@ impl Camera {
 
     pub fn screen_corners(&self) -> (Point, Point, Point) {
         self.screen_corners
+    }
+
+    /// Given coordinates on the screen plane, create a ray passing
+    /// through those coordinates from the camera's origin.
+    pub fn primary_ray(&self, (u, v): (f32, f32)) -> Vector {
+        let (top_left, top_right, bottom_left) = self.screen_corners();
+        let basis_x = top_right - top_left;
+        let basis_y = bottom_left - top_left;
+        let direction = (top_left + u * basis_x + v * basis_y - self.position()).normalize();
+
+        Ray::new(self.position, direction)
     }
 }
