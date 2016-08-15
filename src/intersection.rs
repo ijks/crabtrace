@@ -10,7 +10,7 @@ pub struct Intersection {
 
 impl Intersection {
     pub fn nearest(lhs: Self, rhs: Self) -> Intersection {
-        if lhs.distance > rhs.distance {
+        if lhs.distance < rhs.distance {
             lhs
         } else {
             rhs
