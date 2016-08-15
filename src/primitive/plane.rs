@@ -24,7 +24,7 @@ impl Primitive for Plane {
         let denom = dot(self.normal, ray.direction);
 
         if denom > EPSILON {
-            let distance = dot(self.offset - ray.origin, self.normal);
+            let distance = dot(self.offset - ray.origin, self.normal) / denom;
 
             if distance < 0.0 {
                 return None;
