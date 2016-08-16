@@ -1,6 +1,7 @@
 use math::*;
 use ray::Ray;
 
+/// Represents an intersection between a `Ray` and another object.
 #[derive(Copy, Clone)]
 pub struct Intersection {
     pub distance: f32,
@@ -16,4 +17,10 @@ impl Intersection {
             rhs
         }
     }
+}
+
+/// Something that can be intersected by a ray.
+pub trait Intersect {
+    /// Intersect a ray with this object. Returns `None` if there is no intersection.
+    fn intersect(&self, ray: Ray) -> Option<Intersection>;
 }

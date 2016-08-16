@@ -1,26 +1,18 @@
 use cgmath::prelude::*;
 use cgmath::dot;
 
+use intersection::{Intersect, Intersection};
+use material::Material;
 use math::*;
-use intersection::Intersection;
-use primitive::Primitive;
 use ray::Ray;
 
+#[derive(Debug)]
 pub struct Sphere {
     pub position: Point,
     pub radius: f32,
 }
 
-impl Sphere {
-    pub fn new(position: Point, radius: f32) -> Sphere {
-        Sphere {
-            position: position,
-            radius: radius,
-        }
-    }
-}
-
-impl Primitive for Sphere {
+impl Intersect for Sphere {
     fn intersect(&self, ray: Ray) -> Option<Intersection> {
         let distance = self.position - ray.origin;
         let ray_length = dot(distance, ray.direction);

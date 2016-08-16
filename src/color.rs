@@ -6,7 +6,7 @@ use image;
 
 use math::*;
 
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug)]
 pub struct Color {
     inner: Vector,
 }
@@ -73,6 +73,11 @@ impl Into<Vector> for Color {
     fn into(self) -> Vector {
         self.inner
     }
+}
+
+/// Helper function, for less verbose construction of colors.
+pub fn rgb(r: f32, g: f32, b: f32) -> Color {
+    Color::rgb(r, g, b)
 }
 
 fn convert_component(component: f32) -> u8 {

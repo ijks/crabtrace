@@ -1,25 +1,17 @@
 use cgmath::dot;
 
 use math::*;
-use intersection::Intersection;
+use intersection::{Intersect, Intersection};
 use primitive::Primitive;
 use ray::Ray;
 
+#[derive(Debug)]
 pub struct Plane {
     pub normal: Vector,
     pub offset: Point,
 }
 
-impl Plane {
-    pub fn new(normal: Vector, offset: Point) -> Plane {
-        Plane {
-            normal: normal,
-            offset: offset,
-        }
-    }
-}
-
-impl Primitive for Plane {
+impl Intersect for Plane {
     fn intersect(&self, ray: Ray) -> Option<Intersection> {
         let denom = dot(self.normal, ray.direction);
 

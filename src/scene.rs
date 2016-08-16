@@ -1,10 +1,10 @@
 use camera::Camera;
-use intersection::Intersection;
+use intersection::{Intersect, Intersection};
 use primitive::Primitive;
 use ray::Ray;
 
 pub struct Scene {
-    primitives: Vec<Box<Primitive>>,
+    primitives: Vec<Primitive>,
 }
 
 impl Scene {
@@ -23,7 +23,7 @@ impl Scene {
         nearest
     }
 
-    pub fn add_primitive<P: Primitive + 'static>(&mut self, primitive: P) {
-        self.primitives.push(Box::new(primitive));
+    pub fn add_primitive(&mut self, primitive: Primitive) {
+        self.primitives.push(primitive);
     }
 }

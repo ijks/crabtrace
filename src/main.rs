@@ -7,8 +7,10 @@ use cgmath::prelude::*;
 use cgmath::vec3;
 
 use camera::Camera;
+use color::rgb;
+use material::Material;
 use math::*;
-use primitive::{Sphere, Plane};
+use primitive::Primitive;
 use ray::Ray;
 use raytracer::Raytracer;
 use scene::Scene;
@@ -16,16 +18,22 @@ use scene::Scene;
 mod camera;
 mod color;
 mod intersection;
+mod material;
 mod math;
 mod primitive;
 mod ray;
 mod raytracer;
 mod scene;
+mod texture;
 
 fn main() {
     let mut scene = Scene::new();
-    scene.add_primitive(Sphere::new(vec3(0.0, 0.0, 2.0), 1.0));
-    scene.add_primitive(Plane::new(vec3(0.0, 2.0, 0.0), Vector::unit_y()));
+    scene.add_primitive(Primitive::plane(Material::solid(rgb(1.0, 1.0, 1.0), 1.0),
+                                         vec3(0.0, 2.0, 0.0),
+                                         Vector::unit_y()));
+    scene.add_primitive(Primitive::sphere(Material::solid(rgb(1.0, 0.0, 0.0), 1.0),
+                                          vec3(0.0, 0.0, 2.0),
+                                          1.0));
     let raytracer = Raytracer {
         scene: scene,
         camera: Camera::new(Point::zero(), Vector::unit_z(), 90.0),
