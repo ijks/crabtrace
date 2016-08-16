@@ -38,7 +38,7 @@ impl Camera {
 
     /// Given coordinates on the screen plane, create a ray passing
     /// through those coordinates from the camera's origin.
-    pub fn primary_ray(&self, (u, v): (f32, f32)) -> Vector {
+    pub fn primary_ray(&self, (u, v): (f32, f32)) -> Ray {
         let (top_left, top_right, bottom_left) = self.screen_corners();
         let basis_x = top_right - top_left;
         let basis_y = bottom_left - top_left;
