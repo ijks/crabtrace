@@ -12,19 +12,19 @@ pub struct Color {
 }
 
 impl Color {
-    pub fn new(inner: Vector) -> Color {
+    pub fn new(inner: Vector) -> Self {
         Color { inner: inner }
     }
 
-    pub fn rgb(r: f32, g: f32, b: f32) -> Color {
+    pub fn rgb(r: f32, g: f32, b: f32) -> Self {
         Color::new(vec3(r, g, b))
     }
 
-    pub fn from_bytes(r: u8, g: u8, b: u8) -> Color {
+    pub fn from_bytes(r: u8, g: u8, b: u8) -> Self {
         Color::rgb((r as f32) / 255.0, (g as f32) / 255.0, (b as f32) / 255.0)
     }
 
-    pub fn from_u32(color: u32) -> Color {
+    pub fn from_u32(color: u32) -> Self {
         let r = (color >> 24) as u8;
         let g = (color >> 16) as u8;
         let b = (color >> 8) as u8;
