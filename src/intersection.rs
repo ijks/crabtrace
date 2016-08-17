@@ -22,5 +22,5 @@ impl Intersection {
 /// Something that can be intersected by a ray.
 pub trait Intersect {
     /// Intersect a ray with this object. Returns `None` if there is no intersection.
-    fn intersect(&self, ray: Ray) -> Option<Intersection>;
+    fn intersect(&self, ray: &Ray) -> Option<Intersection>;
 }

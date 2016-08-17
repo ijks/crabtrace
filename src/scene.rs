@@ -11,7 +11,7 @@ impl Scene {
         Scene { primitives: Vec::new() }
     }
 
-    pub fn intersect(&self, ray: Ray) -> Option<Intersection> {
+    pub fn intersect(&self, ray: &Ray) -> Option<Intersection> {
         let mut nearest = None;
 
         for intersection in self.primitives.iter().filter_map(|p| p.intersect(ray)) {

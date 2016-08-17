@@ -8,7 +8,7 @@ pub struct Triangle {
 }
 
 impl Intersect for Triangle {
-    fn intersect(&self, ray: Ray) -> Option<Intersection> {
+    fn intersect(&self, ray: &Ray) -> Option<Intersection> {
         unimplemented!()
     }
 }

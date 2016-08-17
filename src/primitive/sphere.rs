@@ -12,7 +12,7 @@ pub struct Sphere {
 }
 
 impl Intersect for Sphere {
-    fn intersect(&self, ray: Ray) -> Option<Intersection> {
+    fn intersect(&self, ray: &Ray) -> Option<Intersection> {
         let distance = self.position - ray.origin;
         let ray_length = dot(distance, ray.direction);
         let perpendicular = distance - ray_length * ray.direction;

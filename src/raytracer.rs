@@ -15,7 +15,7 @@ pub struct Raytracer {
 
 impl Raytracer {
     pub fn trace(&self, ray: Ray, max_depth: u32) -> TraceResult {
-        let intersection = self.scene.intersect(ray);
+        let intersection = self.scene.intersect(&ray);
         let distance = intersection.map(|i| i.distance).unwrap_or(MAX_DEPTH);
 
         TraceResult { color: Vector::from_value(1.0 - (distance / MAX_DEPTH)).into() }

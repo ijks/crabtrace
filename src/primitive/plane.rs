@@ -11,7 +11,7 @@ pub struct Plane {
 }
 
 impl Intersect for Plane {
-    fn intersect(&self, ray: Ray) -> Option<Intersection> {
+    fn intersect(&self, ray: &Ray) -> Option<Intersection> {
         let denom = dot(self.normal, ray.direction);
 
         if denom > EPSILON {
