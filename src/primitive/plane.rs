@@ -2,7 +2,6 @@ use cgmath::dot;
 
 use math::*;
 use intersection::{Intersect, Intersection};
-use primitive::Primitive;
 use ray::Ray;
 
 #[derive(Debug)]

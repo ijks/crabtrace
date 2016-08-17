@@ -1,4 +1,3 @@
-use camera::Camera;
 use intersection::{Intersect, Intersection};
 use primitive::Primitive;
 use ray::Ray;

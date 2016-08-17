@@ -2,7 +2,6 @@ use cgmath::prelude::*;
 use cgmath::dot;
 
 use intersection::{Intersect, Intersection};
-use material::Material;
 use math::*;
 use ray::Ray;
 
