@@ -17,7 +17,7 @@ impl Camera {
     pub fn new(position: Point, direction: Vector, fov: f32) -> Camera {
         let center = position + direction * (1.0 / (0.5 * fov).tan());
         let left = direction.cross(Vector::unit_y()).normalize();
-        let up = direction.cross(left).normalize();
+        let up = left.cross(direction).normalize();
 
         Camera {
             position: position,
