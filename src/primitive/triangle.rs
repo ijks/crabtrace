@@ -7,8 +7,8 @@ pub struct Triangle {
     pub vertices: [Point; 3],
 }
 
-impl Intersect for Triangle {
-    fn intersect(&self, ray: &Ray) -> Option<Intersection> {
+impl Triangle {
+    pub fn intersect(&self, ray: &Ray) -> Option<(f32, Point, Vector)> {
         unimplemented!()
     }
 }

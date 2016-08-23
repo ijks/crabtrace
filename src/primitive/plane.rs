@@ -10,22 +10,18 @@ pub struct Plane {
     pub offset: Point,
 }
 
-impl Intersect for Plane {
-    fn intersect(&self, ray: &Ray) -> Option<Intersection> {
+impl Plane {
+    pub fn intersect(&self, ray: &Ray) -> Option<(f32, Point, Vector)> {
         let denom = dot(self.normal, ray.direction);
 
-        if denom > EPSILON {
+        if denom.abs() > EPSILON {
             let distance = dot(self.offset - ray.origin, self.normal) / denom;
 
             if distance < 0.0 {
                 return None;
             }
 
-            Some(Intersection {
-                distance: distance,
-                position: ray.evaluate(distance),
-                normal: self.normal,
-            })
+            Some((distance, ray.evaluate(distance), self.normal))
         } else {
             None
         }

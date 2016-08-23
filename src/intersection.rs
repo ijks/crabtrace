@@ -1,16 +1,18 @@
+use material::Material;
 use math::*;
 use ray::Ray;
 
 /// Represents an intersection between a `Ray` and another object.
-#[derive(Copy, Clone)]
-pub struct Intersection {
+#[derive(Clone, Copy, Debug)]
+pub struct Intersection<'m> {
     pub distance: f32,
     pub position: Point,
     pub normal: Vector,
+    pub material: &'m Material,
 }
 
-impl Intersection {
-    pub fn nearest(lhs: Self, rhs: Self) -> Intersection {
+impl<'m> Intersection<'m> {
+    pub fn nearest(lhs: Self, rhs: Self) -> Intersection<'m> {
         if lhs.distance < rhs.distance {
             lhs
         } else {

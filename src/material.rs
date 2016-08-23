@@ -1,6 +1,9 @@
+use std::fmt::{Debug, Formatter, Error};
+
 use color::Color;
 use texture::Texture;
 
+#[derive(Clone, Copy, Debug)]
 pub enum MaterialType {
     Solid {
         specularity: f32,
@@ -12,7 +15,7 @@ pub enum MaterialType {
 }
 
 pub struct Material {
-    texture: Box<Texture>,
+    pub texture: Box<Texture>,
     material_type: MaterialType,
 }
 
@@ -34,5 +37,14 @@ impl Material {
                           ior: ior,
                           opacity: opacity,
                       })
+    }
+}
+
+impl Debug for Material {
+    fn fmt(&self, f: &mut Formatter) -> Result<(), Error> {
+        f.debug_struct("Material")
+            .field("material_type", &self.material_type)
+            .field("texture", &"<trait object>")
+            .finish()
     }
 }

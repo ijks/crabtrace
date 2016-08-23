@@ -51,9 +51,17 @@ impl Primitive {
 impl Intersect for Primitive {
     fn intersect(&self, ray: &Ray) -> Option<Intersection> {
         match self.primitive_type {
-            PrimitiveType::Plane(ref plane) => plane.intersect(ray),
-            PrimitiveType::Sphere(ref sphere) => sphere.intersect(ray),
-            PrimitiveType::Triangle(ref triangle) => triangle.intersect(ray),
-        }
+                PrimitiveType::Plane(ref plane) => plane.intersect(ray),
+                PrimitiveType::Sphere(ref sphere) => sphere.intersect(ray),
+                PrimitiveType::Triangle(ref triangle) => triangle.intersect(ray),
+            }
+            .map(|(distance, position, normal)| {
+                Intersection {
+                    distance: distance,
+                    position: position,
+                    normal: normal,
+                    material: &self.material,
+                }
+            })
     }
 }

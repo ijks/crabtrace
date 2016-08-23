@@ -1,4 +1,4 @@
-use std::ops::Range;
+use std::ops::{Fn, Range};
 
 use cgmath;
 
@@ -6,6 +6,20 @@ pub type Vector = cgmath::Vector3<f32>;
 pub type Point = Vector;
 
 pub const EPSILON: f32 = 10e-5;
+
+pub trait VectorExt {
+    fn map_element_wise<F: Fn(f32) -> f32>(&self, func: F) -> Self;
+}
+
+impl VectorExt for Vector {
+    fn map_element_wise<F: Fn(f32) -> f32>(&self, func: F) -> Self {
+        Vector {
+            x: func(self.x),
+            y: func(self.y),
+            z: func(self.z),
+        }
+    }
+}
 
 pub fn clamp(value: f32, min: f32, max: f32) -> f32 {
     f32::max(min, f32::min(max, value))

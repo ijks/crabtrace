@@ -8,6 +8,7 @@ use cgmath::vec3;
 
 use camera::Camera;
 use color::rgb;
+use light::Light;
 use material::Material;
 use math::*;
 use primitive::Primitive;
@@ -18,6 +19,7 @@ use scene::Scene;
 mod camera;
 mod color;
 mod intersection;
+mod light;
 mod material;
 mod math;
 mod primitive;
@@ -27,16 +29,20 @@ mod scene;
 mod texture;
 
 fn main() {
-    let mut scene = Scene::new();
+    let mut scene = Scene::new(vec3(0.05, 0.05, 0.10).into());
+
     scene.add_primitive(Primitive::plane(Material::solid(rgb(1.0, 1.0, 1.0), 1.0),
-                                         vec3(0.0, 2.0, 0.0),
+                                         vec3(0.0, -1.0, 0.0),
                                          Vector::unit_y()));
     scene.add_primitive(Primitive::sphere(Material::solid(rgb(1.0, 0.0, 0.0), 1.0),
                                           vec3(0.0, 0.0, 2.0),
                                           1.0));
+
+    scene.add_light(Light::point(vec3(1.5, 1.5, 1.5).into(), vec3(0.0, 1.0, 0.5)));
+
     let raytracer = Raytracer {
         scene: scene,
-        camera: Camera::new(Point::zero(), Vector::unit_z(), 90.0),
+        camera: Camera::new(Point::zero(), Vector::unit_z(), 90.0f32.to_radians()),
     };
 
     let size = (512, 512);
@@ -46,6 +52,12 @@ fn main() {
         let ray = raytracer.camera.primary_ray(screen_coords);
         let result = raytracer.trace(ray, 1);
 
+        // assert!({
+        //             let v: Vector = result.color.into();
+        //             v.x >= 0.0 && v.y >= 0.0 && v.z >= 0.0
+        //         },
+        //         "{:?}",
+        //         result.color);
         *pixel = result.color.into_pixel();
     }
 

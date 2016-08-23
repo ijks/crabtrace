@@ -1,4 +1,4 @@
-use std::ops::{Add, Mul};
+use std::ops::{Add, AddAssign, Div, Mul};
 
 use cgmath::prelude::*;
 use cgmath::vec3;
@@ -47,6 +47,12 @@ impl Add for Color {
     }
 }
 
+impl AddAssign for Color {
+    fn add_assign(&mut self, rhs: Self) {
+        *self = *self + rhs;
+    }
+}
+
 impl Mul for Color {
     type Output = Color;
 
@@ -60,6 +66,22 @@ impl Mul<f32> for Color {
 
     fn mul(self, rhs: f32) -> Self::Output {
         Color { inner: self.inner * rhs }
+    }
+}
+
+impl Div for Color {
+    type Output = Color;
+
+    fn div(self, rhs: Self) -> Self::Output {
+        Color { inner: self.inner.div_element_wise(rhs.inner) }
+    }
+}
+
+impl Div<f32> for Color {
+    type Output = Color;
+
+    fn div(self, rhs: f32) -> Self::Output {
+        Color { inner: self.inner / rhs }
     }
 }
 

@@ -11,8 +11,8 @@ pub struct Sphere {
     pub radius: f32,
 }
 
-impl Intersect for Sphere {
-    fn intersect(&self, ray: &Ray) -> Option<Intersection> {
+impl Sphere {
+    pub fn intersect(&self, ray: &Ray) -> Option<(f32, Point, Vector)> {
         let distance = self.position - ray.origin;
         let ray_length = dot(distance, ray.direction);
         let perpendicular = distance - ray_length * ray.direction;
@@ -24,15 +24,11 @@ impl Intersect for Sphere {
         let intersection_length = ray_length -
                                   (self.radius.powi(2) - perpendicular.magnitude2()).sqrt();
 
-        if intersection_length <= 0.0 {
-            return None;
+        if intersection_length > 0.0 {
+            let position = ray.evaluate(intersection_length);
+            Some((intersection_length, position, (position - self.position).normalize()))
+        } else {
+            None
         }
-
-        let position = ray.evaluate(intersection_length);
-        Some(Intersection {
-            distance: intersection_length,
-            position: position,
-            normal: (position - self.position).normalize(),
-        })
     }
 }
