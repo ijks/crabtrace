@@ -4,8 +4,6 @@ use intersection::Intersect;
 use ray::Ray;
 use scene::Scene;
 
-const MAX_DEPTH: f32 = 4.0;
-
 pub struct Raytracer {
     pub camera: Camera,
     pub scene: Scene,
