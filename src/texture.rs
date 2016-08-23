@@ -5,7 +5,7 @@ pub trait Texture {
 }
 
 impl Texture for Color {
-    fn sample(&self, u: f32, v: f32) -> Color {
+    fn sample(&self, _: f32, _: f32) -> Color {
         *self
     }
 }
