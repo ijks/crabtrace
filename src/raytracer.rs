@@ -14,7 +14,7 @@ impl Raytracer {
         if let Some(intersection) = self.scene.intersect(&ray) {
             let irradiance = self.scene.irradiance_at(&intersection);
 
-            TraceResult { color: irradiance * intersection.material.texture.sample(0.0, 0.0) }
+            TraceResult { color: irradiance * intersection.material.texture.sample((0.0, 0.0)) }
         } else {
             TraceResult { color: self.scene.ambient_color }
         }
