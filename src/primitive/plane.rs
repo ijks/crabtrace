@@ -1,7 +1,6 @@
 use cgmath::dot;
 
 use math::*;
-use intersection::{Intersect, Intersection};
 use ray::Ray;
 
 #[derive(Debug)]

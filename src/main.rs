@@ -12,7 +12,6 @@ use light::Light;
 use material::Material;
 use math::*;
 use primitive::Primitive;
-use ray::Ray;
 use raytracer::Raytracer;
 use scene::Scene;
 

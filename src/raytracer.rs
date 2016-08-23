@@ -1,10 +1,6 @@
-use cgmath::prelude::*;
-use cgmath::{dot, vec3};
-
 use camera::Camera;
 use color::Color;
-use intersection::{Intersect, Intersection};
-use math::*;
+use intersection::Intersect;
 use ray::Ray;
 use scene::Scene;
 

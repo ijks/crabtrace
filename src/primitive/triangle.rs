@@ -1,4 +1,3 @@
-use intersection::{Intersect, Intersection};
 use math::*;
 use ray::Ray;
 

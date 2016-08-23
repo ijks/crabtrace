@@ -1,6 +1,5 @@
 use std::fmt::{Debug, Formatter, Error};
 
-use color::Color;
 use texture::Texture;
 
 #[derive(Clone, Copy, Debug)]
