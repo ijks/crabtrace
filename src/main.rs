@@ -51,12 +51,6 @@ fn main() {
         let ray = raytracer.camera.primary_ray(screen_coords);
         let result = raytracer.trace(ray, 1);
 
-        // assert!({
-        //             let v: Vector = result.color.into();
-        //             v.x >= 0.0 && v.y >= 0.0 && v.z >= 0.0
-        //         },
-        //         "{:?}",
-        //         result.color);
         *pixel = result.color.into_pixel();
     }
 
