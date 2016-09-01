@@ -9,13 +9,13 @@ use cgmath::prelude::*;
 use cgmath::vec3;
 
 use camera::Camera;
-use color::rgb;
 use light::Light;
 use material::Material;
 use math::*;
 use primitive::Primitive;
 use raytracer::Raytracer;
 use scene::Scene;
+use texture::checkerboard;
 
 mod camera;
 mod color;
@@ -32,10 +32,10 @@ mod texture;
 fn main() {
     let mut scene = Scene::new(vec3(0.05, 0.05, 0.10).into());
 
-    scene.add_primitive(Primitive::plane(Material::solid(rgb(1.0, 1.0, 1.0), 1.0),
+    scene.add_primitive(Primitive::plane(Material::solid(checkerboard(color!(1.0), color!(0.0), (0.5, 0.5)), 1.0),
                                          vec3(0.0, -1.0, 0.0),
                                          Vector::unit_y()));
-    scene.add_primitive(Primitive::sphere(Material::solid(rgb(1.0, 0.0, 0.0), 1.0),
+    scene.add_primitive(Primitive::sphere(Material::solid(color!(1.0, 0.0, 0.0), 1.0),
                                           vec3(0.0, 0.0, 2.0),
                                           1.0));
 
