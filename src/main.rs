@@ -22,7 +22,7 @@ mod color;
 mod intersection;
 mod light;
 mod material;
-mod math;
+#[macro_use] mod math;
 mod primitive;
 mod ray;
 mod raytracer;

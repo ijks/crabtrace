@@ -16,6 +16,10 @@ impl Color {
         Color { inner: inner }
     }
 
+    pub fn greyscale(value: f32) -> Self {
+        Color::new(Vector::from_value(value))
+    }
+
     pub fn rgb(r: f32, g: f32, b: f32) -> Self {
         Color::new(vec3(r, g, b))
     }

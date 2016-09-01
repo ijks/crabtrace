@@ -32,6 +32,16 @@ pub fn map_range(value: f32, from: Range<f32>, to: Range<f32>) -> f32 {
     to.start + slope * (value - from.start)
 }
 
+macro_rules! vec3 {
+    ($v:expr) => ($crate::math::Vector::from_value($v));
+    ($x:expr, $y:expr, $z:expr) => ($crate::math::Vector::new($x, $y, $z));
+}
+
+macro_rules! color {
+    ($v:expr) => ($crate::color::Color::greyscale($v));
+    ($r:expr, $g:expr, $b:expr) => ($crate::color::Color::rgb($r, $g, $b));
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
