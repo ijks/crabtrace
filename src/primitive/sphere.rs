@@ -4,7 +4,7 @@ use cgmath::dot;
 use math::*;
 use ray::Ray;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Sphere {
     pub position: Point,
     pub radius: f32,
@@ -29,5 +29,9 @@ impl Sphere {
         } else {
             None
         }
+    }
+
+    pub fn texture_map(&self, position: Point) -> UVCoords {
+        (0.0, 0.0)
     }
 }

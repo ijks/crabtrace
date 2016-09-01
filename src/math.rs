@@ -4,6 +4,7 @@ use cgmath;
 
 pub type Vector = cgmath::Vector3<f32>;
 pub type Point = Vector;
+pub type UVCoords = (f32, f32);
 
 pub const EPSILON: f32 = 10e-5;
 

@@ -11,12 +11,14 @@ mod plane;
 mod sphere;
 mod triangle;
 
+#[derive(Clone, Debug)]
 enum PrimitiveType {
     Plane(plane::Plane),
     Sphere(sphere::Sphere),
     Triangle(triangle::Triangle),
 }
 
+#[derive(Debug)]
 pub struct Primitive {
     pub material: Material,
 
@@ -46,6 +48,14 @@ impl Primitive {
                            radius: radius,
                        }))
     }
+
+    pub fn texture_map(&self, position: Point) -> UVCoords {
+        match self.primitive_type {
+            PrimitiveType::Plane(ref plane) => plane.texture_map(position),
+            PrimitiveType::Sphere(ref sphere) => sphere.texture_map(position),
+            PrimitiveType::Triangle(ref triangle) => triangle.texture_map(position),
+        }
+    }
 }
 
 impl Intersect for Primitive {
@@ -57,10 +67,10 @@ impl Intersect for Primitive {
             }
             .map(|(distance, position, normal)| {
                 Intersection {
+                    primitive: self,
                     distance: distance,
                     position: position,
                     normal: normal,
-                    material: &self.material,
                 }
             })
     }
