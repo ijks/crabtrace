@@ -1,12 +1,13 @@
 #![feature(conservative_impl_trait)]
 
 extern crate cgmath;
-extern crate image;
+extern crate png;
 
 use std::fs::File;
 
 use cgmath::prelude::*;
 use cgmath::vec3;
+use png::HasParameters;
 
 use camera::Camera;
 use light::Light;
@@ -46,17 +47,28 @@ fn main() {
         camera: Camera::new(Point::zero(), Vector::unit_z(), 90.0f32.to_radians()),
     };
 
-    let size = (512, 512);
-    let mut buffer = image::ImageBuffer::new(size.0, size.1);
-    for (x, y, pixel) in buffer.enumerate_pixels_mut() {
-        let screen_coords = (x as f32 / size.0 as f32, y as f32 / size.1 as f32);
-        let ray = raytracer.camera.primary_ray(screen_coords);
-        let result = raytracer.trace(ray, 1);
+    let (w, h) = (512, 512);
+    let mut output_data = Vec::with_capacity(w * h);
+    for y in 0 .. h {
+        for x in 0 .. w {
+            let screen_coords = (x as f32 / w as f32, y as f32 / h as f32);
+            let ray = raytracer.camera.primary_ray(screen_coords);
+            let result = raytracer.trace(ray, 1);
 
-        *pixel = result.color.into_pixel();
+            let (r, g, b) = result.color.as_bytes();
+            output_data.push(r);
+            output_data.push(g);
+            output_data.push(b);
+        }
     }
 
     // TODO: add command line options to configure this.
     let mut output = File::create("output.png").expect("Couldn't create output file.");
-    image::ImageRgb8(buffer).save(&mut output, image::PNG).expect("Couldn't write to output file.");
+
+    let mut encoder = png::Encoder::new(output, w as u32, h as u32);
+    encoder.set(png::ColorType::RGB).set(png::BitDepth::Eight);
+    encoder.write_header()
+        .unwrap()
+        .write_image_data(&output_data)
+        .unwrap();
 }

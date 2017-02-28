@@ -2,7 +2,6 @@ use std::ops::{Add, AddAssign, Div, Mul};
 
 use cgmath::prelude::*;
 use cgmath::vec3;
-use image;
 
 use math::*;
 
@@ -36,10 +35,12 @@ impl Color {
         Color::from_bytes(r, g, b)
     }
 
-    pub fn into_pixel(self) -> image::Rgb<u8> {
-        image::Rgb([convert_component(self.inner.x),
-                    convert_component(self.inner.y),
-                    convert_component(self.inner.z)])
+    pub fn as_bytes(&self) -> (u8, u8, u8) {
+        fn to_byte(component: f32) -> u8 {
+            map_range(clamp(component, 0.0, 1.0), 0.0..1.0, 0.0..255.0) as u8
+        }
+
+        (to_byte(self.inner.x), to_byte(self.inner.y), to_byte(self.inner.z))
     }
 }
 
@@ -104,8 +105,4 @@ impl Into<Vector> for Color {
 /// Helper function, for less verbose construction of colors.
 pub fn rgb(r: f32, g: f32, b: f32) -> Color {
     Color::rgb(r, g, b)
-}
-
-fn convert_component(component: f32) -> u8 {
-    map_range(clamp(component, 0.0, 1.0), 0.0..1.0, 0.0..255.0) as u8
 }
