@@ -1,6 +1,7 @@
 use camera::Camera;
 use color::Color;
 use intersection::Intersect;
+use material::{Material, MaterialType};
 use ray::Ray;
 use scene::Scene;
 
@@ -11,16 +12,37 @@ pub struct Raytracer {
 
 impl Raytracer {
     pub fn trace(&self, ray: Ray, max_depth: u32) -> TraceResult {
+        if max_depth <= 0 {
+            return TraceResult { color: Color::greyscale(0.0) };
+        }
+
         if let Some(intersection) = self.scene.intersect(&ray) {
             let primitive = intersection.primitive;
+            let surface_color =
+                primitive.material.texture
+                    .sample(primitive.texture_map(intersection.position));
             let irradiance = self.scene.irradiance_at(&intersection);
 
-            TraceResult {
-                color: irradiance *
-                       primitive.material
-                    .texture
-                    .sample(primitive.texture_map(intersection.position)),
-            }
+            let color = match primitive.material.material_type {
+                MaterialType::Solid { specularity } => {
+                    // Seems I actually meant for these materials to also reflect
+                    // based on specularity. Well, that's what you get for not
+                    // commenting I guess. So, TODO.
+                    irradiance * surface_color
+                }
+                MaterialType::Dielectric { ior, opacity } => {
+                    // TODO: Implement Snell, Fresnel laws
+                    // For we now we just do perfect reflections.
+                    let reflection = self.trace(
+                        ray.reflect(intersection.normal, intersection.position),
+                        max_depth - 1,
+                    );
+
+                    reflection.color * surface_color
+                }
+            };
+
+            TraceResult { color }
         } else {
             TraceResult { color: self.scene.ambient_color }
         }

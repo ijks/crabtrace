@@ -15,7 +15,7 @@ pub enum MaterialType {
 
 pub struct Material {
     pub texture: Box<Texture>,
-    material_type: MaterialType,
+    pub material_type: MaterialType,
 }
 
 impl Material {

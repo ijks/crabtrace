@@ -42,7 +42,7 @@ fn main() {
         for x in 0 .. w {
             let screen_coords = (x as f32 / w as f32, y as f32 / h as f32);
             let ray = raytracer.camera.primary_ray(screen_coords);
-            let result = raytracer.trace(ray, 1);
+            let result = raytracer.trace(ray, 10);
 
             let (r, g, b) = result.color.as_bytes();
             output_data.push(r);
