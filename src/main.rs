@@ -63,7 +63,7 @@ fn main() {
 }
 
 fn example_scene() -> Scene {
-    let mut scene = Scene::new(vec3(0.05, 0.05, 0.10).into());
+    let mut scene = Scene::new(color::Color::from_u32(0x8cbed6));
 
     scene.add_primitive(
         Primitive::plane(
@@ -78,14 +78,14 @@ fn example_scene() -> Scene {
 
     scene.add_primitive(
         Primitive::sphere(
-            Material::solid(color!(1.0, 0.0, 0.0), 1.0),
+            Material::dielectric(color!(0.35, 0.99, 0.35), 1.0, 1.0),
             vec3(0.0, 0.0, 2.0),
             1.0,
         )
     );
 
     scene.add_light(
-        Light::point(vec3(1.5, 1.5, 1.5).into(), vec3(0.0, 1.0, 0.5)),
+        Light::point(vec3(2.0, 2.0, 2.0).into(), vec3(0.0, 1.0, 0.5)),
     );
 
     scene
