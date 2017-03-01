@@ -1,9 +1,9 @@
 use math::{Point, Vector};
 
 use cgmath::prelude::*;
-use cgmath::ApproxEq;
+use cgmath::{ApproxEq, dot};
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Ray {
     pub origin: Point,
     pub direction: Vector,
@@ -24,5 +24,31 @@ impl Ray {
 
     pub fn evaluate(&self, distance: f32) -> Point {
         self.origin + self.direction * distance
+    }
+
+    pub fn reflect(&self, normal: Vector, intersection: Point) -> Ray {
+        let new_direction =
+            self.direction - 2f32 * dot(self.direction, normal) * normal;
+
+        Ray {
+            origin: intersection,
+            direction: new_direction,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use cgmath::vec3;
+    use super::*;
+
+    #[test]
+    fn test_reflect() {
+        let ray = Ray::new(vec3(-1.0, 1.0, 0.0), vec3(1.0, -1.0, 0.0).normalize());
+        let normal = vec3(0.0, 1.0, 0.0);
+        let intersection = vec3(0.0, 0.0, 0.0);
+
+        let result = Ray::new(vec3(0.0, 0.0, 0.0), vec3(1.0, 1.0, 0.0).normalize());
+        assert_eq!(ray.reflect(normal, intersection), result);
     }
 }
