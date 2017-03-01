@@ -11,6 +11,7 @@ mod plane;
 mod sphere;
 mod triangle;
 
+/// The kind and parameters of the shape a primitive has.
 #[derive(Clone, Debug)]
 enum PrimitiveType {
     Plane(plane::Plane),
@@ -18,6 +19,7 @@ enum PrimitiveType {
     Triangle(triangle::Triangle),
 }
 
+/// A basic shape from which we can build larger objects and scenes.
 #[derive(Debug)]
 pub struct Primitive {
     pub material: Material,
@@ -49,6 +51,8 @@ impl Primitive {
                        }))
     }
 
+    /// Get the corresponding UV coordinates for a point on (or near) the surface
+    /// of a primitive.
     pub fn texture_map(&self, position: Point) -> UVCoords {
         match self.primitive_type {
             PrimitiveType::Plane(ref plane) => plane.texture_map(position),

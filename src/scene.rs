@@ -32,6 +32,8 @@ impl Scene {
         self.lights.push(light);
     }
 
+    /// Calculate the irradiance, i.e. the reflected amount of light, at a point
+    /// in the scene.
     pub fn irradiance_at(&self, intersection: &Intersection) -> Color {
         let mut radiance = self.ambient_color;
 
@@ -59,6 +61,8 @@ impl Scene {
         radiance
     }
 
+    /// Check whether a ray passes through any primitives, within a maximum
+    /// distance.
     pub fn is_occluded(&self, ray: &Ray, max_distance: f32) -> bool {
         self.primitives
             .iter()

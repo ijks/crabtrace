@@ -5,6 +5,7 @@ use cgmath::vec3;
 
 use math::*;
 
+/// A float-based RGB color.
 #[derive(Clone, Copy, Debug)]
 pub struct Color {
     inner: Vector,

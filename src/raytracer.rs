@@ -5,12 +5,14 @@ use material::{Material, MaterialType};
 use ray::Ray;
 use scene::Scene;
 
+/// The main state of our raytracer. Keeps track of the scene and camera.
 pub struct Raytracer {
     pub camera: Camera,
     pub scene: Scene,
 }
 
 impl Raytracer {
+    /// Trace a single ray into the scene and return the color of whatever it hit.
     pub fn trace(&self, ray: Ray, max_depth: u32) -> Color {
         if max_depth <= 0 {
             return Color::greyscale(0.0);

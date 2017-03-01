@@ -3,6 +3,7 @@ use cgmath::prelude::*;
 use math::*;
 use ray::Ray;
 
+/// A camera in our scene, which will be the origin of our rays.
 #[derive(Clone, Copy)]
 pub struct Camera {
     position: Point,

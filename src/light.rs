@@ -1,16 +1,21 @@
 use color::Color;
 use math::*;
 
+/// The kind of light and its parameters.
 #[derive(Clone, Copy, Debug)]
 pub enum LightType {
+    /// Light radiates outwards from a single point.
     Point {
         position: Point,
     },
+
+    /// All light comes from the same direction.
     Directional {
         direction: Vector,
     },
 }
 
+/// A light source in our scene.
 pub struct Light {
     pub color: Color,
 
