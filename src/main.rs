@@ -52,7 +52,7 @@ fn main() {
     }
 
     // TODO: add command line options to configure this.
-    let mut output = File::create("output.png").expect("Couldn't create output file.");
+    let output = File::create("output.png").expect("Couldn't create output file.");
 
     let mut encoder = png::Encoder::new(output, w as u32, h as u32);
     encoder.set(png::ColorType::RGB).set(png::BitDepth::Eight);
