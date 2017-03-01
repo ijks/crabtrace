@@ -11,9 +11,9 @@ pub struct Raytracer {
 }
 
 impl Raytracer {
-    pub fn trace(&self, ray: Ray, max_depth: u32) -> TraceResult {
+    pub fn trace(&self, ray: Ray, max_depth: u32) -> Color {
         if max_depth <= 0 {
-            return TraceResult { color: Color::greyscale(0.0) };
+            return Color::greyscale(0.0);
         }
 
         if let Some(intersection) = self.scene.intersect(&ray) {
@@ -23,7 +23,7 @@ impl Raytracer {
                     .sample(primitive.texture_map(intersection.position));
             let irradiance = self.scene.irradiance_at(&intersection);
 
-            let color = match primitive.material.material_type {
+            match primitive.material.material_type {
                 MaterialType::Solid { specularity } => {
                     // Seems I actually meant for these materials to also reflect
                     // based on specularity. Well, that's what you get for not
@@ -38,18 +38,11 @@ impl Raytracer {
                         max_depth - 1,
                     );
 
-                    reflection.color * surface_color
+                    reflection * surface_color
                 }
-            };
-
-            TraceResult { color }
+            }
         } else {
-            TraceResult { color: self.scene.ambient_color }
+            self.scene.ambient_color
         }
     }
-}
-
-#[derive(Debug)]
-pub struct TraceResult {
-    pub color: Color,
 }

@@ -44,7 +44,7 @@ fn main() {
             let ray = raytracer.camera.primary_ray(screen_coords);
             let result = raytracer.trace(ray, 10);
 
-            let (r, g, b) = result.color.as_bytes();
+            let (r, g, b) = result.as_bytes();
             output_data.push(r);
             output_data.push(g);
             output_data.push(b);
