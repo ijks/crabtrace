@@ -69,7 +69,7 @@ fn example_scene() -> Scene {
         Primitive::plane(
             Material::solid(
                 checkerboard(color!(1.0), color!(0.0), (0.5, 0.5)),
-                1.0,
+                0.0,
             ),
             vec3(0.0, -1.0, 0.0),
             Vector::unit_y(),
@@ -78,7 +78,7 @@ fn example_scene() -> Scene {
 
     scene.add_primitive(
         Primitive::sphere(
-            Material::dielectric(color!(0.35, 0.99, 0.35), 1.0, 1.0),
+            Material::solid(color!(0.35, 0.99, 0.35), 0.6),
             vec3(0.0, 0.0, 2.0),
             1.0,
         )

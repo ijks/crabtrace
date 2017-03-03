@@ -30,7 +30,18 @@ impl Raytracer {
                     // Seems I actually meant for these materials to also reflect
                     // based on specularity. Well, that's what you get for not
                     // commenting I guess. So, TODO.
-                    irradiance * surface_color
+                    let reflection = if (specularity > 0.0) {
+                        self.trace(
+                            ray.reflect(intersection.normal, intersection.position),
+                            max_depth - 1,
+                        ) * surface_color
+                    } else {
+                        color!(0.0)
+                    };
+
+                    let diffuse = irradiance * surface_color;
+
+                    reflection * specularity + diffuse * (1.0 - specularity)
                 }
                 MaterialType::Dielectric { ior, opacity } => {
                     // TODO: Implement Snell, Fresnel laws
