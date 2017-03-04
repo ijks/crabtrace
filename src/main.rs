@@ -63,8 +63,13 @@ fn main() {
 }
 
 fn example_scene() -> Scene {
-    let mut scene = Scene::new(color::Color::from_u32(0x8cbed6));
+    let mut scene = Scene::new(color!(0.1, 0.1, 0.1));
 
+    let white = color!(1.0, 1.0, 1.0);
+    let red = color!(1.0, 0.0, 0.0);
+    let green = color!(0.0, 1.0, 0.0);
+
+    // floor
     scene.add_primitive(
         Primitive::plane(
             Material::solid(
@@ -76,16 +81,61 @@ fn example_scene() -> Scene {
         )
     );
 
+    // left
+    scene.add_primitive(
+        Primitive::plane(
+            Material::solid(red, 0.0),
+            vec3(-1.0, 0.0, 0.0),
+            Vector::unit_x(),
+        )
+    );
+
+    // right
+    scene.add_primitive(
+        Primitive::plane(
+            Material::solid(green, 0.0),
+            vec3(1.0, 0.0, 0.0),
+            -Vector::unit_x(),
+        )
+    );
+
+    // ceiling
+    scene.add_primitive(
+        Primitive::plane(
+            Material::solid(white, 0.0),
+            vec3(0.0, 1.0, 0.0),
+            -Vector::unit_y(),
+        )
+    );
+
+    // back
+    scene.add_primitive(
+        Primitive::plane(
+            Material::solid(white, 0.0),
+            vec3(0.0, 0.0, 2.0),
+            -Vector::unit_z(),
+        )
+    );
+
+    //front
+    scene.add_primitive(
+        Primitive::plane(
+            Material::solid(white, 0.0),
+            vec3(0.0, 0.0, -2.0),
+            Vector::unit_z(),
+        )
+    );
+
     scene.add_primitive(
         Primitive::sphere(
-            Material::solid(color!(0.35, 0.99, 0.35), 0.6),
+            Material::solid(color!(0.1, 0.1, 0.1), 0.6),
             vec3(0.0, 0.0, 2.0),
             1.0,
         )
     );
 
     scene.add_light(
-        Light::point(vec3(2.0, 2.0, 2.0).into(), vec3(0.0, 1.0, 0.5)),
+        Light::point(color!(4.0, 4.0, 4.0), vec3(0.0, 0.0, 0.0)),
     );
 
     scene
