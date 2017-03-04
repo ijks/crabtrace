@@ -27,9 +27,6 @@ impl Raytracer {
 
             match primitive.material.material_type {
                 MaterialType::Solid { specularity } => {
-                    // Seems I actually meant for these materials to also reflect
-                    // based on specularity. Well, that's what you get for not
-                    // commenting I guess. So, TODO.
                     let reflection = if (specularity > 0.0) {
                         self.trace(
                             ray.reflect(intersection.normal, intersection.position),
