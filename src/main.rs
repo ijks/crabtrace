@@ -1,6 +1,7 @@
 #![feature(conservative_impl_trait)]
 
 extern crate cgmath;
+extern crate ordered_float;
 extern crate png;
 
 use std::fs::File;
