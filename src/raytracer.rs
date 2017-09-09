@@ -1,7 +1,6 @@
 use camera::Camera;
 use color::Color;
-use intersection::Intersect;
-use material::{Material, MaterialType};
+use material::MaterialType;
 use ray::Ray;
 use scene::Scene;
 
@@ -18,8 +17,7 @@ impl Raytracer {
             return Color::greyscale(0.0);
         }
 
-        if let Some(intersection) = self.scene.intersect(&ray) {
-            let primitive = intersection.primitive;
+        if let Some((intersection, primitive)) = self.scene.intersect(&ray) {
             let surface_color =
                 primitive.material.texture
                     .sample(primitive.texture_map(intersection.position));
@@ -27,7 +25,7 @@ impl Raytracer {
 
             match primitive.material.material_type {
                 MaterialType::Solid { specularity } => {
-                    let reflection = if (specularity > 0.0) {
+                    let reflection = if specularity > 0.0 {
                         self.trace(
                             ray.reflect(intersection.normal, intersection.position),
                             max_depth - 1,

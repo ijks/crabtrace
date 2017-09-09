@@ -1,8 +1,10 @@
+use ordered_float::OrderedFloat;
+
 use cgmath::prelude::*;
 use cgmath::dot;
 
 use color::Color;
-use intersection::{Intersect, Intersection};
+use intersection::Intersection;
 use light::{Light, LightType};
 use math::*;
 use primitive::Primitive;
@@ -30,6 +32,13 @@ impl Scene {
 
     pub fn add_light(&mut self, light: Light) {
         self.lights.push(light);
+    }
+
+    pub fn intersect(&self, ray: &Ray) -> Option<(Intersection, &Primitive)> {
+        self.primitives
+            .iter()
+            .filter_map(|p| p.intersect(ray).map(|i| (i, p)))
+            .min_by_key(|&(i, _)| OrderedFloat(i.distance))
     }
 
     /// Calculate the irradiance, i.e. the reflected amount of light, at a point
@@ -68,18 +77,5 @@ impl Scene {
             .iter()
             .filter_map(|p| p.intersect(ray))
             .any(|i| i.distance < max_distance)
-    }
-}
-
-impl Intersect for Scene {
-    fn intersect(&self, ray: &Ray) -> Option<Intersection> {
-        let mut nearest = None;
-
-        for intersection in self.primitives.iter().filter_map(|p| p.intersect(ray)) {
-            nearest =
-                Some(nearest.map_or(intersection, |i| Intersection::nearest(i, intersection)));
-        }
-
-        nearest
     }
 }
