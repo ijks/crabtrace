@@ -36,9 +36,9 @@ impl Scene {
 
     pub fn intersect(&self, ray: &Ray) -> Option<(Intersection, &Primitive)> {
         self.primitives
-        .iter()
-        .filter_map(|p| p.intersect(ray).map(|i| (i, p)))
-        .min_by_key(|&(i, _)| OrderedFloat(i.distance))
+            .iter()
+            .filter_map(|p| p.intersect(ray).map(|i| (i, p)))
+            .min_by_key(|&(i, _)| OrderedFloat(i.distance))
     }
 
     /// Calculate the irradiance, i.e. the reflected amount of light, at a point
