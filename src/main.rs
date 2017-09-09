@@ -39,10 +39,11 @@ fn main() {
 
     let (w, h) = (512, 512);
     let mut output_data = Vec::with_capacity(w * h);
+    let primary_rays = raytracer.camera.primary_rays();
     for y in 0 .. h {
         for x in 0 .. w {
             let screen_coords = (x as f32 / w as f32, y as f32 / h as f32);
-            let ray = raytracer.camera.primary_ray(screen_coords);
+            let ray = primary_rays.at(screen_coords);
             let result = raytracer.trace(ray, 10);
 
             let (r, g, b) = result.as_bytes();
