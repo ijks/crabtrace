@@ -17,13 +17,13 @@ impl Raytracer {
             return Color::greyscale(0.0);
         }
 
-        if let Some((intersection, primitive)) = self.scene.intersect(&ray) {
+        if let Some((intersection, object)) = self.scene.intersect(&ray) {
             let surface_color =
-                primitive.material.texture
-                    .sample(primitive.texture_map(intersection.position));
+                object.material.texture
+                    .sample(object.texture_map(intersection.position));
             let irradiance = self.scene.irradiance_at(&intersection);
 
-            match primitive.material.material_type {
+            match object.material.material_type {
                 MaterialType::Solid { specularity } => {
                     let reflection = if specularity > 0.0 {
                         self.trace(
@@ -38,6 +38,7 @@ impl Raytracer {
 
                     reflection * specularity + diffuse * (1.0 - specularity)
                 }
+
                 MaterialType::Dielectric { ior, opacity } => {
                     // TODO: Implement Snell, Fresnel laws
                     // For we now we just do perfect reflections.

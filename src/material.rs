@@ -40,11 +40,13 @@ impl Material {
 
     /// Create a new dielectric (i.e. transparent) material.
     pub fn dielectric<T: Texture + 'static>(texture: T, ior: f32, opacity: f32) -> Self {
-        Material::new(texture,
-                      MaterialType::Dielectric {
-                          ior: ior,
-                          opacity: opacity,
-                      })
+        Material::new(
+            texture,
+            MaterialType::Dielectric {
+                ior: ior,
+                opacity: opacity,
+            },
+        )
     }
 }
 
