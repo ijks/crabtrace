@@ -1,6 +1,7 @@
 use std::ops::{Fn, Range};
 
 use cgmath;
+use cgmath::prelude::*;
 
 pub type Vector = cgmath::Vector3<f32>;
 pub type Point = Vector;
@@ -30,6 +31,13 @@ pub fn map_range(value: f32, from: Range<f32>, to: Range<f32>) -> f32 {
     let slope = (to.end - to.start) / (from.end - from.start);
 
     to.start + slope * (value - from.start)
+}
+
+pub fn approx_fresnel(direction: Vector, normal: Vector, ior_from: f32, ior_to: f32) -> f32 {
+    let cos_in = direction.dot(normal);
+    let parallel = ((ior_from - ior_to) / (ior_from + ior_to)).powi(2);
+
+    parallel + (1.0 - parallel) * (1.0 - cos_in).powi(5)
 }
 
 macro_rules! vec3 {
