@@ -108,6 +108,7 @@ fn intersect_plane(ray: &Ray, normal: Vector, offset: Vector) -> Option<Intersec
             distance,
             position: ray.evaluate(distance),
             normal,
+            inside: denom < 0.0,
         })
     } else {
         None
@@ -116,7 +117,7 @@ fn intersect_plane(ray: &Ray, normal: Vector, offset: Vector) -> Option<Intersec
 
 fn intersect_sphere(ray: &Ray, center: Point, radius: f32) -> Option<Intersection> {
     let distance = center - ray.origin;
-    let ray_length = dot(distance, ray.direction);
+    let ray_length = distance.dot(ray.direction);
     let perpendicular = distance - ray_length * ray.direction;
 
     if perpendicular.magnitude2() > radius.powi(2) {
@@ -128,10 +129,12 @@ fn intersect_sphere(ray: &Ray, center: Point, radius: f32) -> Option<Intersectio
 
     if intersection_length > 0.0 {
         let position = ray.evaluate(intersection_length);
+        let normal = (position - center).normalize();
         Some(Intersection {
             distance: intersection_length,
             position,
-            normal: (position - center).normalize(),
+            normal,
+            inside: normal.dot(ray.direction) < 0.0,
         })
     } else {
         None
