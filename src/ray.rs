@@ -39,6 +39,24 @@ impl Ray {
             direction: new_direction,
         }
     }
+
+    pub fn refract(&self, normal: Vector, intersection: Point, ior_from: f32, ior_to: f32)
+        -> Option<Ray> {
+        let ratio = ior_from / ior_to;
+        let cos_in = self.direction.dot(normal);
+        let k = 1.0 - ratio.powi(2) - (1.0 - cos_in.powi(2));
+
+        if k < 0.0 {
+            return None;
+        }
+
+        let new_direction = ratio * self.direction + normal * (ratio * cos_in * k.sqrt());
+
+        Some(Ray {
+            origin: intersection,
+            direction: new_direction,
+        })
+    }
 }
 
 #[cfg(test)]
