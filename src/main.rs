@@ -37,7 +37,7 @@ fn main() {
         camera: Camera::new(Point::zero(), Vector::unit_z(), 90.0f32.to_radians()),
     };
 
-    let (w, h) = (512, 512);
+    let (w, h) = (1024, 1024);
     let mut output_data = Vec::with_capacity(w * h);
     let primary_rays = raytracer.camera.primary_rays();
     for y in 0 .. h {
